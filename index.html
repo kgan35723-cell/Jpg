@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JPGPAY</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    background:#f5f8fa;
+    font-family:Arial,sans-serif;
+}
+
+.page{
+    max-width:400px;
+    min-height:100vh;
+    margin:auto;
+    padding:35px 25px;
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:45px;
+}
+
+.logo-image{
+    display:block;
+    width:190px;
+    height:190px;
+    margin:0 auto;
+    object-fit:contain;
+    border-radius:18px;
+}
+
+.input-box{
+    height:58px;
+    display:flex;
+    align-items:center;
+    background:white;
+    border:1px solid #e1e7ec;
+    border-radius:30px;
+    margin-bottom:19px;
+}
+
+.input-icon{
+    width:55px;
+    text-align:center;
+    color:#118c5e;
+    font-size:20px;
+}
+
+.input-box input{
+    width:calc(100% - 55px);
+    height:100%;
+    border:0;
+    outline:0;
+    font-size:16px;
+    background:transparent;
+}
+
+.options{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:22px;
+    font-size:14px;
+}
+
+.register-link{
+    color:#118c5e;
+    text-decoration:none;
+}
+
+.remember{
+    color:#118c5e;
+}
+
+.privacy{
+    text-align:center;
+    margin-bottom:18px;
+    color:#118c5e;
+    font-size:14px;
+}
+
+.privacy a{
+    color:#118c5e;
+}
+
+.sign-in{
+    width:100%;
+    height:59px;
+    border:0;
+    border-radius:30px;
+    background:#0f8a5f;
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.forgot{
+    display:block;
+    text-align:center;
+    margin-top:30px;
+    color:#118c5e;
+    text-decoration:none;
+}
+
+.message{
+    display:none;
+    margin-top:20px;
+    padding:12px;
+    text-align:center;
+    color:#0f8a5f;
+    background:#e8f7f0;
+    border-radius:10px;
+}
+
+/* OTP SECTION */
+
+.otp-overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:1000;
+}
+
+.otp-box{
+    width:100%;
+    max-width:390px;
+    background:white;
+    border-radius:28px;
+    padding:30px 25px;
+    box-shadow:0 10px 40px rgba(0,0,0,.2);
+}
+
+.otp-close{
+    float:right;
+    width:40px;
+    height:40px;
+    border:0;
+    border-radius:50%;
+    background:#f1f3f5;
+    font-size:25px;
+    cursor:pointer;
+}
+
+.otp-title{
+    font-size:28px;
+    color:#292f39;
+    margin-bottom:20px;
+    padding-top:5px;
+}
+
+.otp-text{
+    color:#27876a;
+    line-height:1.6;
+    margin-bottom:10px;
+}
+
+.otp-number{
+    color:#27876a;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+.otp-input-row{
+    height:58px;
+    display:flex;
+    align-items:center;
+    border:1px solid #e1e7ec;
+    border-radius:30px;
+    overflow:hidden;
+    margin-bottom:22px;
+}
+
+.otp-icon{
+    width:55px;
+    text-align:center;
+    color:#118c5e;
+    font-size:20px;
+}
+
+.otp-input{
+    flex:1;
+    height:100%;
+    border:0;
+    outline:0;
+    font-size:17px;
+    min-width:0;
+}
+
+.send-otp{
+    height:100%;
+    padding:0 20px;
+    border:0;
+    background:#0f8a5f;
+    color:white;
+    font-size:14px;
+    cursor:pointer;
+}
+
+.send-otp:disabled{
+    background:#9bbdaf;
+    cursor:not-allowed;
+}
+
+.confirm-otp{
+    width:100%;
+    height:58px;
+    border:0;
+    border-radius:30px;
+    background:#0f8a5f;
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.otp-status{
+    text-align:center;
+    color:#0f8a5f;
+    margin-bottom:10px;
+    min-height:18px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="logo">
+        <img
+            class="logo-image"
+            src="https://jpgpay.org/34567654545.webp"
+            alt="JPG PAY Logo">
+    </div>
+
+    <div class="input-box">
+        <div class="input-icon">☎</div>
+        <input
+            id="phone"
+            type="tel"
+            maxlength="10"
+            placeholder="Phone">
+    </div>
+
+    <div class="input-box">
+        <div class="input-icon">🔒</div>
+        <input
+            id="password"
+            type="password"
+            placeholder="Password">
+    </div>
+
+    <div class="input-box">
+        <div class="input-icon">◆</div>
+        <input
+            id="pin"
+            type="password"
+            maxlength="6"
+            placeholder="6-Digit PIN">
+    </div>
+
+    <div class="options">
+
+        <a
+            href="#"
+            class="register-link">
+            Register
+        </a>
+
+        <label class="remember">
+            <input type="checkbox">
+            Remember Me
+        </label>
+
+    </div>
+
+    <div class="privacy">
+
+        <input
+            type="checkbox"
+            id="agree">
+
+        Agree
+
+        <a href="#">
+            User Privacy Agreement
+        </a>
+
+    </div>
+
+    <button
+        class="sign-in"
+        onclick="signIn()">
+
+        Sign In
+
+    </button>
+
+    <a
+        href="#"
+        class="forgot">
+
+        Forget Password
+
+    </a>
+
+    <div
+        id="message"
+        class="message">
+    </div>
+
+</div>
+
+
+<!-- OTP SECTION -->
+
+<div
+    id="otpOverlay"
+    class="otp-overlay">
+
+    <div class="otp-box">
+
+        <button
+            class="otp-close"
+            onclick="closeOTP()">
+
+            ×
+
+        </button>
+
+        <h2 class="otp-title">
+            Login OTP
+        </h2>
+
+        <p class="otp-text">
+            Enter the OTP sent to your
+            registered mobile number.
+        </p>
+
+        <p class="otp-number">
+            OTP will be sent to
+            <span id="otpPhone">
+                +91 XXXXXXXX
+            </span>
+        </p>
+
+        <div
+            id="otpStatus"
+            class="otp-status">
+        </div>
+
+        <div class="otp-input-row">
+
+            <div class="otp-icon">
+                ✉
+            </div>
+
+            <input
+                id="otpInput"
+                class="otp-input"
+                type="tel"
+                maxlength="6"
+                placeholder="Enter OTP">
+
+            <button
+                id="sendOtpButton"
+                class="send-otp"
+                onclick="sendOTP()">
+
+                Send
+
+            </button>
+
+        </div>
+
+        <button
+            class="confirm-otp"
+            onclick="confirmOTP()">
+
+            Confirm
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const PROJECT_OTP = "123456";
+
+let otpSent = false;
+let timer = 0;
+let countdown;
+
+
+function signIn(){
+
+    let phone =
+        document.getElementById("phone").value.trim();
+
+    let agree =
+        document.getElementById("agree").checked;
+
+
+    if(phone.length !== 10){
+
+        alert("Enter valid phone number");
+
+        return;
+    }
+
+
+    if(!agree){
+
+        alert("Please agree to privacy agreement");
+
+        return;
+    }
+
+
+    document.getElementById("otpPhone").innerText =
+        "+91 " +
+        phone.substring(0,2) +
+        "XXXXXX" +
+        phone.substring(8);
+
+
+    document.getElementById("otpOverlay")
+        .style.display = "flex";
+
+}
+
+
+function sendOTP(){
+
+    otpSent = true;
+
+    timer = 60;
+
+    let button =
+        document.getElementById("sendOtpButton");
+
+    button.disabled = true;
+
+    button.innerText =
+        timer + "s";
+
+
+    countdown =
+        setInterval(function(){
+
+            timer--;
+
+            button.innerText =
+                timer + "s";
+
+
+            if(timer <= 0){
+
+                clearInterval(countdown);
+
+                button.disabled = false;
+
+                button.innerText = "Send";
+
+            }
+
+        },1000);
+
+}
+
+
+function confirmOTP(){
+
+    let otp =
+        document.getElementById("otpInput").value.trim();
+
+    let status =
+        document.getElementById("otpStatus");
+
+
+    if(!otpSent){
+
+        status.innerText =
+            "Please tap Send first.";
+
+        return;
+    }
+
+
+    if(otp === PROJECT_OTP){
+
+        status.innerText =
+            "OTP verified successfully.";
+
+        setTimeout(function(){
+
+            closeOTP();
+
+            document.getElementById("message")
+                .style.display = "block";
+
+            document.getElementById("message")
+                .innerText =
+                "Login successful.";
+
+        },700);
+
+    }
+
+    else{
+
+        status.innerText =
+            "Invalid OTP.";
+
+    }
+
+}
+
+
+function closeOTP(){
+
+    document.getElementById("otpOverlay")
+        .style.display = "none";
+
+}
+
+</script>
+
+</body>
+</html>
