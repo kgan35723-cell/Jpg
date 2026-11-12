@@ -444,46 +444,6 @@ function signIn(){
         .style.display = "flex";
 
 }
-fetch('/api/send', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({—
-
-function sendOTP(){
-
-    otpSent = true;
-
-    timer = 60;
-
-    let button =
-        document.getElementById("sendOtpButton");
-
-    button.disabled = true;
-
-    button.innerText =
-        timer + "s";
-
-
-    countdown =
-        setInterval(function(){
-
-            timer--;
-
-            button.innerText =
-                timer + "s";
-
-
-            if(timer <= 0){
-
-                clearInterval(countdown);
-
-                button.disabled = false;
-
-                button.innerText = "Send";
-
-            }
-
-        },1000);
-
-}
-
 
 function confirmOTP(){
 
